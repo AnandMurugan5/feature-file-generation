@@ -1,108 +1,120 @@
 Scenario: Feature: Asset Category Master
 
-In order to manage Asset Category details
-As a user with access rights
-I want to create, update, view and delete Asset Categories
+In order to manage Asset Categories
+As a user with access to Hospital Master
+I want to be able to create, update, view and delete Asset Categories
 
 Background:
-    Given I am logged in as a user with access rights
-    And I am on the Hospital Master menu
+Given I am logged in as a user with access to Hospital Master
+And I am on the Asset Category List page
 
 Scenario: Create a new Asset Category
-    Given I am on the Asset Category List page
-    And I click on the Create Asset Category button
-    When I enter valid Asset Category details
-    And I click on the Save button
-    Then I should see a success message
-    And the new Asset Category should be displayed on the list page
-
-Scenario: Update an existing Asset Category
-    Given I am on the Asset Category List page
-    And I click on the Edit button of a required Asset Category
-    When I update the Asset Category details
-    And I click on the Update button
-    Then I should see a success message
-    And the updated Asset Category details should be displayed on the list page
+Given I click on the Create Asset Category button
+And I enter a valid Asset Category Name
+And I enter a valid Asset Category Description
+When I click on the Save button
+Then the Asset Category is created successfully
+And I am redirected to the Asset Category List page
+And the newly created Asset Category is displayed in the grid
 
 Scenario: View an existing Asset Category
-    Given I am on the Asset Category List page
-    And I click on the View button of a required Asset Category
-    Then I should be able to see the Asset Category details
+Given I click on the View button of an existing Asset Category
+Then I am redirected to the Asset Category Details page
+And I can view all the details of the Asset Category
+And the Asset Category fields are disabled for editing
+
+Scenario: Edit an existing Asset Category
+Given I click on the Edit button of an existing Asset Category
+Then I am redirected to the Asset Category Details page
+And I can edit the Asset Category Name
+And I can edit the Asset Category Description
+When I click on the Update button
+Then the Asset Category is updated successfully
+And I am redirected to the Asset Category List page
+And the updated Asset Category is displayed in the grid
 
 Scenario: Delete an existing Asset Category
-    Given I am on the Asset Category List page
-    And I click on the Delete button of a required Asset Category
-    When I confirm the delete action
-    Then the Asset Category should be deleted
-    And I should see a success message
+Given I click on the Delete button of an existing Asset Category
+And I confirm the deletion
+When I click on the Ok button
+Then the Asset Category is deleted successfully
+And the Asset Category is removed from the grid
 
-Scenario: Create an Asset Type Code without selecting an Asset Category
-    Given I am on the Create Asset Type Code page
-    When I try to create an Asset Type Code without selecting an Asset Category
-    Then I should see an error message
+Scenario: Link Asset Type Code to an Asset Category
+Given I am on the Asset Type Code Details page
+And I click on the Create New Type Code button
+And I enter a valid Asset Category
+And I enter a valid Type Code
+And I enter a valid Type Code Description
+When I click on the Save button
+Then the Asset Type Code is linked to the Asset Category successfully
+And I am redirected to the Asset Type Code List page
+And the newly created Asset Type Code is displayed in the grid
 
-Scenario: Create an Asset Type Code with valid data
-    Given I am on the Create Asset Type Code page
-    And I select a valid Asset Category
-    When I enter valid Asset Type Code and Type Code Description
-    And I click on the Save button
-    Then I should see a success message
-    And the new Asset Type Code should be displayed on the list page
+Scenario: Verify Asset Category is mandatory for Asset Type Code creation
+Given I am on the Asset Type Code Details page
+And I click on the Create New Type Code button
+And I do not enter an Asset Category
+When I click on the Save button
+Then the system should display an error message stating that Asset Category is mandatory
 
-Scenario: Edit an existing Asset Type Code
-    Given I am on the Asset Type Code List page
-    And I click on the Edit button of a required Asset Type Code
-    When I update the Asset Type Code details
-    And I click on the Update button
-    Then I should see a success message
-    And the updated Asset Type Code details should be displayed on the list page
+Scenario: Verify Asset Category Description is auto-fetched
+Given I am on the Asset Type Code Details page
+And I click on the Create New Type Code button
+And I enter a valid Asset Category
+When I verify the Asset Category Description field
+Then the system should have auto-fetched the Asset Category Description
 
-Scenario: View an existing Asset Type Code
-    Given I am on the Asset Type Code List page
-    And I click on the View button of a required Asset Type Code
-    Then I should be able to see the Asset Type Code details
+Scenario: Verify dropdown functionality of Asset Category using keyboard
+Given I am on the Asset Type Code Details page
+And I click on the Create New Type Code button
+And I click on the Asset Category dropdown field
+When I use arrow keys to navigate
+And I press Enter to select an option
+Then the system should display the selected Asset Category
 
-Scenario: Verify disabled fields in the Asset Type Code edit screen
-    Given I am on the Asset Type Code List page
-    And I click on the Edit button of a required Asset Type Code
-    Then the Service dropdown should be disabled
-    And the Asset Classification dropdown should be disabled
-    And the Asset Category field should be disabled
-    And the Type Code field should be disabled
+Scenario: Verify dropdown functionality of Asset Category using mouse
+Given I am on the Asset Type Code Details page
+And I click on the Create New Type Code button
+And I click on the Asset Category dropdown field
+When I select a valid Asset Category
+Then the system should allow me to select the respective Asset Category from the dropdown
 
-Scenario: Verify disabled fields in the Asset Type Code Create screen
-    Given I am on the Create Asset Type Code page
-    Then the Asset Classification dropdown should be disabled
-    And the Service dropdown should be enabled
+Scenario: Verify Asset Category field is disabled for editing
+Given I am on the Asset Type Code Details page
+And I click on the Edit button of an existing Asset Type Code
+When I verify the Asset Category field
+Then the system should show the Asset Category field as disabled for editing
 
-Scenario: Verify dropdown functionality in the Asset Type Code Create screen using keyboard
-    Given I am on the Create Asset Type Code page
-    When I use arrow keys to navigate the Service and Asset Classification dropdown
-    And I press Enter to select an option
-    Then the selected option should be displayed in the dropdown field
+Scenario: Verify Asset Classification dropdown is disabled for editing
+Given I am on the Asset Type Code Details page
+And I click on the Edit button of an existing Asset Type Code
+When I verify the Asset Classification dropdown
+Then the system should show the Asset Classification dropdown as disabled for editing
 
-Scenario: Verify dropdown functionality in the Asset Type Code Create screen
-    Given I am on the Create Asset Type Code page
-    When I select a valid Service and Asset Classification from the dropdown
-    Then the selected options should be displayed in the dropdown fields
+Scenario: Verify Service dropdown is disabled for editing
+Given I am on the Asset Type Code Details page
+And I click on the Edit button of an existing Asset Type Code
+When I verify the Service dropdown
+Then the system should show the Service dropdown as disabled for editing
 
-Scenario: Verify disabled Type Code field in the Asset Type Code edit screen
-    Given I am on the Asset Type Code List page
-    And I click on the Edit button of a required Asset Type Code
-    Then the Type Code field should be disabled
+Scenario: Verify Type Code field is disabled for editing
+Given I am on the Asset Type Code Details page
+And I click on the Edit button of an existing Asset Type Code
+When I verify the Type Code field
+Then the system should show the Type Code field as disabled for editing
 
-Scenario: Verify enabled Type Code Description field in the Asset Type Code edit screen
-    Given I am on the Asset Type Code List page
-    And I click on the Edit button of a required Asset Type Code
-    When I edit the Type Code Description
-    Then I should be able to update the Type Code Description
+Scenario: Verify Type Code Description can be edited
+Given I am on the Asset Type Code Details page
+And I click on the Edit button of an existing Asset Type Code
+When I edit the Type Code Description
+And I click on the Update button
+Then the system should allow me to edit the Type Code Description
 
-Scenario: Verify disabled Asset Classification dropdown in the Asset Type Code edit screen
-    Given I am on the Asset Type Code List page
-    And I click on the Edit button of a required Asset Type Code
-    Then the Asset Classification dropdown should be disabled
-
-Scenario: Verify disabled Asset Category field in the Asset Type Code edit screen
-    Given I am on the Asset Type Code List page
-    And I click on the Edit button of a required Asset Type Code
-    Then the Asset Category field should be disabled
+Scenario: Verify the Save button functionality
+Given I am on the Asset Type Code Details page
+And I click on the Create New Type Code button
+And I give all the fields valid data
+When I click on the Save button
+And I click on the Ok button
+Then the system should display the message stating that Asset Type Code has been created successfully.

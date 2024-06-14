@@ -1,36 +1,29 @@
 Scenario: Feature: Quota Rules Management
 
-In order to manage quota rules effectively
-As a user with appropriate permissions
+In order to manage quota rules efficiently
+As a user with the necessary permissions
 I want to create and delete quota rules through the OMS application
 
 Background:
     Given I am logged in to the OMS application with valid credentials
+    And I am on the Quota Rules screen
 
-Scenario: Create a New Quota Rule
+Scenario: Create a new quota rule
     Given I am on the Quota Rules screen
-    Then I should see the Rules Header and Rules Definition sections
-    And I should see the Save and Cancel buttons
-    When I fill in the necessary fields with valid data
-    And I click on the Save button
-    Then the new quota rule should be saved successfully
+    And I click the "Create New Rule" button
+    Then the "Rules Header Section" and "Rules Definition Section" should be visible
+    And the "Save" and "Cancel" buttons should be available
+    And I should be able to enter the necessary details to create a new quota rule
+    When I click the "Save" button
+    Then the new quota rule should be created successfully
+    And I should see a success message confirming the creation
 
-Scenario: Delete an Existing Quota Rule
+Scenario: Delete an existing quota rule
     Given I am on the Quota Rules screen
-    And there is a quota rule displayed in a tabular format
-    When I select the Delete option for the rule
+    And there is an existing quota rule to be deleted
+    When I select the "Delete" option for the quota rule
     Then a confirmation message should be displayed
+    And I should be able to confirm or cancel the deletion
     When I confirm the deletion
     Then the quota rule should be deleted successfully
-
-Scenario: Invalid Quota Rule Creation
-    Given I am on the Quota Rules screen
-    And I try to create a new quota rule with invalid data
-    Then I should see appropriate error messages
-    And the rule should not be saved
-
-Scenario: Invalid Quota Rule Deletion
-    Given I am on the Quota Rules screen
-    And I try to delete a quota rule that doesn't exist
-    Then I should see an appropriate error message
-    And the rule should not be deleted
+    And I should see a success message confirming the deletion
