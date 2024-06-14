@@ -1,29 +1,51 @@
-Scenario: Feature: Quota Rules Management
+Scenario: Gherkin Feature File:
 
-In order to manage quota rules efficiently
-As a user with the necessary permissions
-I want to create and delete quota rules through the OMS application
+Feature: Quota Rules Management
+In order to manage Quota Rules effectively
+As a Quota Rules Manager
+I want to create and delete quota rules from the OMS application
 
 Background:
-    Given I am logged in to the OMS application with valid credentials
-    And I am on the Quota Rules screen
+Given I am logged in to the OMS application with valid credentials
 
 Scenario: Create a new quota rule
-    Given I am on the Quota Rules screen
-    And I click the "Create New Rule" button
-    Then the "Rules Header Section" and "Rules Definition Section" should be visible
-    And the "Save" and "Cancel" buttons should be available
-    And I should be able to enter the necessary details to create a new quota rule
-    When I click the "Save" button
-    Then the new quota rule should be created successfully
-    And I should see a success message confirming the creation
+Given I am on the Quota Rules screen
+And the Rules Header Section and Rules Definition Section are visible
+When I fill in all required fields with valid data
+And click on the Save button
+Then the new quota rule should be created successfully
+And a success message should be displayed
+And the new quota rule should be visible on the Quota Rules screen
 
 Scenario: Delete an existing quota rule
-    Given I am on the Quota Rules screen
-    And there is an existing quota rule to be deleted
-    When I select the "Delete" option for the quota rule
-    Then a confirmation message should be displayed
-    And I should be able to confirm or cancel the deletion
-    When I confirm the deletion
-    Then the quota rule should be deleted successfully
-    And I should see a success message confirming the deletion
+Given I am on the Quota Rules screen
+And an existing quota rule is visible in the table
+When I select the Delete option for the quota rule
+And confirm the deletion
+Then the quota rule should be deleted successfully
+And a success message should be displayed
+And the quota rule should no longer be visible in the table
+
+Scenario: Invalid input for creating a quota rule
+Given I am on the Quota Rules screen
+And the Rules Header Section and Rules Definition Section are visible
+When I fill in any required field with invalid data
+And click on the Save button
+Then an error message should be displayed
+And the quota rule should not be created
+
+Scenario: Cancel creating a new quota rule
+Given I am on the Quota Rules screen
+And the Rules Header Section and Rules Definition Section are visible
+When I fill in any required field with valid data
+And click on the Cancel button
+Then the quota rule should not be created
+And I should remain on the Quota Rules screen
+
+Scenario: Cancel deleting an existing quota rule
+Given I am on the Quota Rules screen
+And an existing quota rule is visible in the table
+When I select the Delete option for the quota rule
+And cancel the deletion
+Then the quota rule should not be deleted
+And I should remain on the Quota Rules screen
