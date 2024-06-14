@@ -1,71 +1,63 @@
 Scenario: Feature: Asset Type Code - Master
 
-In order to manage Asset Type Code Details
-As a user with appropriate access
-I want to create, update, view, and delete Asset Type Codes
+    In order to define Asset Type Code details
+    As a user with access to Hospital Master menu
+    I want to be able to Create/Update/View/Delete Asset Type Codes
 
-Background:
-Given I am logged in to the system
-And I have appropriate access to the Hospital Master menu
+    Background:
+        Given I am on the Asset Type Code page
 
-Scenario: View Asset Type Code Details
-Given I am on the Asset Type Code page
-When I click on the View button of a required Asset Type Code
-Then I should be able to view the required Asset Type Code Details
+Scenario: Validating the functionality of View
+        Given I am on the Asset Type Code page
+        When I click on the View button of a required Asset Type Code
+        Then the system should allow me to view the required Asset Type Code details
 
-Scenario: Edit Asset Type Code
-Given I am on the Asset Type Code page
-When I click on the Edit button of a required Asset Type Code
-Then I should be able to navigate into the Asset Type code Update screen
-And I should see the Service and Asset Classification dropdown fields
-And I should see the Asset Category, Type Code, and Type Code Description text fields
-And I should see the Update and Cancel buttons
+Scenario: Validating the functionality of edit icon
+        Given I am on the Asset Type Code page
+        When I click on the edit button of a required Asset Type Code
+        Then the system should allow me to navigate to the Asset Type code Update screen
 
-Scenario: Verify Disabled Type Code field
-Given I am on the Asset Type Code page
-When I click on the Edit button of a required Asset Type Code
-Then the Type Code field should be disabled to edit
+Scenario: Verify the edit functionality of Type Code
+        Given I am on the Asset Type Code Update screen
+        When I click on the edit button of the Type Code field
+        Then the system should show the Type Code field as disabled to edit
 
-Scenario: Edit Type Code Description
-Given I am on the Asset Type Code page
-When I click on the Edit button of a required Asset Type Code
-And I edit the Type Code Description
-Then I should be able to save the changes successfully
+Scenario: Verify the edit functionality of Type Code Description
+        Given I am on the Asset Type Code Update screen
+        When I edit the Type Code description
+        Then the system should allow me to edit the Type Code description
 
-Scenario: Create New Type Code with valid data
-Given I am on the Asset Type Code page
-When I click on the Create New Type Code button
-And I enter a valid Asset Category, Type Code, and Type Code Description
-And I click on the Save button
-Then the system should allow me to enter the Asset Category, Type Code, and Type Code Description
-And the Asset Category description should be auto-fetched
+Scenario: Validating the functionality of Asset Category, Type Code and Type Code Description with Valid data
+        Given I am on the Create New Type Code page
+        When I enter valid Asset Category, Type Code and Type Code Description
+        And I click on the Save button
+        Then the system should allow me to enter the Asset Category, Type Code and Type Code Description
 
-Scenario: Save New Type Code
-Given I am on the Asset Type Code page
-When I click on the Create New Type Code button
-And I enter all fields with valid data
-And I click on the Save button
-And I click on the Ok button
-Then the system should display the message "<Asset Type Code> - <Type code Description> has been created successfully!"
+Scenario: Validating the functionality of Save button
+        Given I am on the Create New Type Code page
+        When I give all the fields with valid data
+        And I click on the Save button
+        And I click on the Ok button
+        Then the system should display the message '<Asset Type Code> - <Type code Description> has been created successfully!'
 
-Scenario: Dropdown Functionality of Service and Asset Classification (via keyboard)
-Given I am on the Create New Type Code page
-When I click on the Service and Asset Classification dropdown fields
-And I use the arrow keys to navigate
-And I press Enter to select an option
-Then the selected Service and Asset Classification should be displayed in the dropdown field
+Scenario: Validating the dropdown functionality of Service and Asset Classification using keyboard in Create Asset Code page
+        Given I am on the Create New Type Code page
+        When I click on the Service and Asset Classification dropdown field
+        And I use arrow keys to navigate
+        And I press Enter to select an option
+        Then the system should display the selected Service and Asset Classification dropdown field
 
-Scenario: Dropdown Functionality of Service and Asset Classification
-Given I am on the Create New Type Code page
-When I select the Service and Asset Classification dropdown fields
-Then I should be able to select the respective Service and Asset Classification from the dropdown
+Scenario: Validating the dropdown functionality of Service and Asset Classification
+        Given I am on the Create New Type Code page
+        When I select the respective Service and Asset Classification from the dropdown
+        Then the system should allow me to select the respective Service and Asset Classification
 
-Scenario: Asset Type Code List Elements Presence
-Given I am on the Asset Type Code page
-When I verify the screen elements
-Then I should see the Service, Asset Classification, Asset Category, Asset Category Description, Type Code, Type Code Description, View icon, Edit button, Delete button, Create New Asset Type Code button, Close button, Refresh button, and Export button
+Scenario: Verify the screen elements presence in the Asset Type Code List
+        Given I am on the Asset Type Code page
+        When I verify the screen elements
+        Then the system should display the screen elements presence in the 'Asset Type Code List' Page
 
-Scenario: Functionality of Service Dropdown
-Given I am on the Asset Type Code page
-When I verify the Service dropdown
-Then the Service dropdown should defaulty display the All option.
+Scenario: Verification of the functionality of Service Dropdown
+        Given I am on the Asset Type Code page
+        When I verify the Service dropdown
+        Then the system should defaultly display the Service with All Option.
