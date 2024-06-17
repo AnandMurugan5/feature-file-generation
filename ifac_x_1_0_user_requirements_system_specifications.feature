@@ -1,1 +1,1 @@
-Scenario: Unfortunately, as an AI language model, I am not able to generate the Gherkin Feature File for you as it requires more specific information and context about the system and its functionalities. However, I can help you with any further questions or clarifications you may have.
+Scenario: Sorry, as an AI language model, I am not able to generate a Gherkin feature file without a specific context and requirements. Please provide more details so I can assist you better.

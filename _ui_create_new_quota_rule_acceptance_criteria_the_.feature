@@ -1,66 +1,98 @@
 Scenario: Feature: Quota Rules Management
 
-    In order to manage quota rules effectively,
-    As a user with appropriate access,
-    I want to create and delete quota rules.
+In order to manage quota rules efficiently
+As a quota rules administrator
+I want to create, view, edit, and delete quota rules
 
 Background:
-    Given I am logged in to the OMS application
-    And I am on the Quota Rules screen
+    Given the user is logged in to the OMS application
+    And on the Quota Rules screen
 
-Scenario: Create New Quota Rule
-
-    Given the Rules Header Section and Rules Definition Section are visible
+Scenario: Create new quota rule
+    Given the user is on the Quota Rules screen
+    And the Rules Header and Rules Definition sections are visible
     And the Save and Cancel buttons are available
-    When I fill in all the required fields
-    And I click Save
-    Then the new quota rule should be created successfully
+    When the user enters valid quota rule details
+    And clicks on Save button
+    Then the quota rule should be saved successfully
+    And a success message should be displayed
 
-Scenario: Delete an Existing Quota Rule
+Scenario: Cancel creating a new quota rule
+    Given the user is on the Quota Rules screen
+    And the Rules Header and Rules Definition sections are visible
+    And the Save and Cancel buttons are available
+    When the user clicks on Cancel button
+    Then the user should be navigated back to the Quota Rules screen
+    And the new quota rule should not be saved
 
-    Given I am on the View Rule page of an existing quota rule
-    And there is an option to delete the rule
-    When I select the delete option
+Scenario: Delete an existing quota rule
+    Given the user is on the Quota Rules screen
+    And there is at least one existing quota rule
+    When the user clicks on the Delete icon for a quota rule
     Then a confirmation message should be displayed
-    And I click Yes to confirm deletion
+    And the user should have the option to confirm or cancel the deletion
+    When the user confirms the deletion
     Then the quota rule should be deleted successfully
+    And a success message should be displayed
 
-Scenario: Filter by Rule Type
+Scenario: Cancel deleting an existing quota rule
+    Given the user is on the Quota Rules screen
+    And there is at least one existing quota rule
+    When the user clicks on the Delete icon for a quota rule
+    Then a confirmation message should be displayed
+    And the user should have the option to confirm or cancel the deletion
+    When the user cancels the deletion
+    Then the quota rule should not be deleted
+    And the user should remain on the Quota Rules screen
 
-    Given the filter icon next to the Rule Type column is clicked
-    And the Select Value dropdown is displayed
-    When a valid rule type is selected and the Apply button is clicked
-    Then the Quota Rules should be displayed based on the provided filter
+Scenario: View and edit an existing quota rule
+    Given the user is on the Quota Rules screen
+    And there is at least one existing quota rule
+    When the user clicks on the Edit icon for a quota rule
+    Then the user should be navigated to the Edit Quota Rule screen
+    And the existing quota rule details should be displayed
+    And the Save and Cancel buttons should be available
+    When the user updates the quota rule details
+    And clicks on Save button
+    Then the quota rule should be updated successfully
+    And a success message should be displayed
+
+Scenario: Cancel editing an existing quota rule
+    Given the user is on the Edit Quota Rule screen
+    And there is at least one existing quota rule
+    When the user clicks on Cancel button
+    Then the user should be navigated back to the Quota Rules screen
+    And the existing quota rule details should not be updated
+
+Scenario: Filter quota rules by rule type
+    Given the user is on the Quota Rules screen
+    And there are multiple existing quota rules
+    When the user clicks on the Filter icon next to the Rule Type column
+    Then a select value dropdown should be displayed
+    And the user should have the option to select one or multiple rule types
+    And the user should have the option to clear or apply the filter
+    When the user applies the filter
+    Then the quota rules should be displayed based on the selected rule type(s)
     And the filter icon should be highlighted
-    When the Clear button is clicked
-    Then the Quota Rules should be displayed without the filter
 
-Scenario: Filter by Rule Name
-
-    Given the filter icon next to the Rule Name column is clicked
-    And the Filter by textbox is displayed
-    When a valid rule name is provided and the Apply button is clicked
-    Then the Quota Rules should be displayed based on the provided filter
+Scenario: Filter quota rules by rule name
+    Given the user is on the Quota Rules screen
+    And there are multiple existing quota rules
+    When the user clicks on the Filter icon next to the Rule Name column
+    Then a filter by text box should be displayed
+    And the user should have the option to enter a valid rule name
+    And the user should have the option to clear or apply the filter
+    When the user applies the filter
+    Then the quota rules should be displayed based on the entered rule name
     And the filter icon should be highlighted
-    When an invalid rule name is provided and the Apply button is clicked
-    Then the message "No results found" should be displayed
-    When the Clear button is clicked
-    Then the Quota Rules should be displayed without the filter
 
-Scenario: Filter by Rule Action
-
-    Given the filter icon next to the Rule Action column is clicked
-    And the Select Value dropdown is displayed
-    When a valid rule action is selected and the Apply button is clicked
-    Then the Quota Rules should be displayed based on the provided filter
+Scenario: Filter quota rules by rule action
+    Given the user is on the Quota Rules screen
+    And there are multiple existing quota rules
+    When the user clicks on the Filter icon next to the Rule Action column
+    Then a filter by text box should be displayed
+    And the user should have the option to enter a valid rule action
+    And the user should have the option to clear or apply the filter
+    When the user applies the filter
+    Then the quota rules should be displayed based on the entered rule action
     And the filter icon should be highlighted
-    When the Clear button is clicked
-    Then the Quota Rules should be displayed without the filter
-
-Scenario: Cancel Quota Rule Edit
-
-    Given I am on the Edit Quota Rule page
-    And I make changes to the details
-    When I click Cancel
-    Then the changes should not be saved
-    And I should be redirected back to the Quota Rules screen.

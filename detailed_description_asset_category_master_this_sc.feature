@@ -1,91 +1,126 @@
 Scenario: Feature: Asset Category Master
 
-In order to manage asset categories for all locations
-As a user with access to Hospital Master
-I want to be able to create, update, view, and delete Asset Categories
-
 Background:
-Given I am logged in as a user with access to Hospital Master
-And I am on the Asset Category List page
+Given the user has access to the Hospital Master menu
 
-Scenario: Create Asset Category with valid data
-Given I click the Create Asset Category button
-And I enter a valid Asset Category Name
-And I select a valid Asset Category Type
-And I enter a valid Asset Category Description
-When I click the Save button
-Then I should see a success message
-And the new Asset Category should be listed in the grid
+Scenario: Create Asset Category
+Given the user is on the Asset Category List page
+When the user clicks on the Create Asset Category button
+And fills in all required fields with valid data
+And clicks on the Save button
+Then the system should save the data
+And redirect the user to the Asset Category List page
+And display a success message
 
-Scenario: Create Asset Category with invalid data
-Given I click the Create Asset Category button
-And I enter an invalid or duplicate Asset Category Name
-When I click the Save button
-Then I should see an error message
-And the Asset Category should not be created
+Scenario: View Asset Category details
+Given the user is on the Asset Category List page
+When the user clicks on the View button for a specific Asset Category
+Then the system should display the Asset Category details
 
-Scenario: View Asset Category Details
-Given I select an Asset Category from the grid
-When I click the View button
-Then I should see the Asset Category details
-And the fields should be disabled for editing
-
-Scenario: Update Asset Category with valid data
-Given I select an Asset Category from the grid
-When I click the Edit button
-And I update the Asset Category Name, Type, or Description
-And I click the Save button
-Then I should see a success message
-And the updated Asset Category should be listed in the grid
-
-Scenario: Update Asset Category with invalid data
-Given I select an Asset Category from the grid
-When I click the Edit button
-And I update the Asset Category Name to an invalid or duplicate value
-And I click the Save button
-Then I should see an error message
-And the Asset Category should not be updated
+Scenario: Edit Asset Category details
+Given the user is on the Asset Category List page
+When the user clicks on the Edit button for a specific Asset Category
+And updates any required fields
+And clicks on the Save button
+Then the system should save the updated data
+And redirect the user to the Asset Category List page
+And display a success message
 
 Scenario: Delete Asset Category
-Given I select an Asset Category from the grid
-When I click the Delete button
-And I confirm the deletion
-Then I should see a success message
-And the Asset Category should be removed from the grid
+Given the user is on the Asset Category List page
+When the user clicks on the Delete button for a specific Asset Category
+Then the system should prompt the user for confirmation
+And if confirmed, delete the Asset Category and its associated Asset Type Codes
+And display a success message
 
-Scenario: Create Asset Type Code without Asset Category
-Given I am on the Asset Type Code Details page
-When I click the Create New Type Code button
-And I do not select an Asset Category
-Then I should see an error message
-And the Asset Type Code should not be created
+Scenario: Create Asset Type Code
+Given the user is on the Asset Category List page
+When the user clicks on the Create Asset Type Code button for a specific Asset Category
+And fills in all required fields with valid data
+And clicks on the Save button
+Then the system should save the data
+And redirect the user to the Asset Type Code List page
+And display a success message
 
-Scenario: Create Asset Type Code with valid data
-Given I am on the Asset Type Code Details page
-And I select a valid Asset Category
-When I click the Create New Type Code button
-And I enter a valid Type Code and Type Code Description
-And I select a valid Service and Asset Classification
-And I click the Save button
-Then I should see a success message
-And the new Asset Type Code should be listed in the grid
+Scenario: View Asset Type Code details
+Given the user is on the Asset Type Code List page for a specific Asset Category
+When the user clicks on the View button for a specific Asset Type Code
+Then the system should display the Asset Type Code details
 
-Scenario: Verify Asset Type Code Edit functionality
-Given I am on the Asset Type Code Details page
-And I select an existing Asset Type Code
-When I click the Edit button
-Then the Service, Asset Classification, Asset Category, and Type Code fields should be disabled for editing
+Scenario: Edit Asset Type Code details
+Given the user is on the Asset Type Code List page for a specific Asset Category
+When the user clicks on the Edit button for a specific Asset Type Code
+And updates any required fields
+And clicks on the Update button
+Then the system should save the updated data
+And redirect the user to the Asset Type Code List page
+And display a success message
 
-Scenario: Verify Asset Type Code Delete functionality
-Given I am on the Asset Type Code Details page
-And I select an existing Asset Type Code
-When I click the Delete button
-And I confirm the deletion
-Then I should see a success message
-And the Asset Type Code should be removed from the grid
+Scenario: Delete Asset Type Code
+Given the user is on the Asset Type Code List page for a specific Asset Category
+When the user clicks on the Delete button for a specific Asset Type Code
+Then the system should prompt the user for confirmation
+And if confirmed, delete the Asset Type Code and its associated Assets
+And display a success message
 
 Scenario: Asset Category and Asset Type Code linkage
-Given I am on the Asset Type Code Details page
-And I select an existing Asset Type Code
-When I verify the Asset Category field
-Then the selected Asset Category should match the Asset Category associated with the Asset Type Code in the Asset register.
+Given the user is creating a new Asset
+When the user selects a specific Asset Category and Asset Type Code
+Then the system should link the Asset Category and Asset Type Code together to create the Asset in the Asset register
+
+Scenario: Asset Category validation
+Given the user is creating or updating an Asset Type Code
+When the user selects an invalid Asset Category
+Then the system should display an error message
+
+Scenario: Asset Type Code validation
+Given the user is creating or updating an Asset Type Code
+When the user enters an invalid Asset Type Code
+Then the system should display an error message
+
+Scenario: Asset Type Code Description validation
+Given the user is creating or updating an Asset Type Code
+When the user enters an invalid Asset Type Code Description
+Then the system should display an error message
+
+Scenario: Service dropdown validation
+Given the user is editing an Asset Type Code
+When the user tries to edit the Service dropdown
+Then the system should disable the Service dropdown
+
+Scenario: Asset Classification dropdown validation
+Given the user is editing an Asset Type Code
+When the user tries to edit the Asset Classification dropdown
+Then the system should disable the Asset Classification dropdown
+
+Scenario: Category field validation
+Given the user is editing an Asset Type Code
+When the user tries to edit the Category field
+Then the system should disable the Category field
+
+Scenario: Type Code validation
+Given the user is editing an Asset Type Code
+When the user tries to edit the Type Code field
+Then the system should disable the Type Code field
+
+Scenario: Type Code Description validation
+Given the user is editing an Asset Type Code
+When the user updates the Type Code Description field
+Then the system should allow the user to edit the Type Code Description field
+
+Scenario: Service and Asset Classification dropdown functionality
+Given the user is creating a new Asset Type Code
+When the user selects a Service and Asset Classification from the dropdown
+Then the system should allow the user to select the respective Service and Asset Classification
+
+Scenario: Service and Asset Classification dropdown functionality using keyboard
+Given the user is creating a new Asset Type Code
+When the user navigates the Service and Asset Classification dropdowns using arrow keys and selects an option with Enter
+Then the system should display the selected Service and Asset Classification dropdown fields
+
+Scenario: Save button functionality
+Given the user is creating a new Asset Type Code
+When the user fills in all required fields with valid data
+And clicks on the Save button
+And clicks on the Ok button in the success message popup
+Then the system should display a success message containing the Asset Type Code and its Description

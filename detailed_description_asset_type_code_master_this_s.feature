@@ -1,63 +1,121 @@
 Scenario: Feature: Asset Type Code - Master
 
-    In order to define Asset Type Code details
-    As a user with access to Hospital Master menu
-    I want to be able to Create/Update/View/Delete Asset Type Codes
+In order to manage Asset Type Code Details for all locations
+As a user with access to Hospital Master menu
+I want to be able to Create/Update/View/Delete Asset Type Codes
 
-    Background:
-        Given I am on the Asset Type Code page
+Background:
+    Given I am logged in as a user with access to Hospital Master menu
 
-Scenario: Validating the functionality of View
-        Given I am on the Asset Type Code page
-        When I click on the View button of a required Asset Type Code
-        Then the system should allow me to view the required Asset Type Code details
+Scenario: Navigate to Asset Type Code page
+    Given I am on the Hospital Master menu
+    When I click on Asset Type Code Details
+    Then I should be redirected to the Asset Type Code page
 
-Scenario: Validating the functionality of edit icon
-        Given I am on the Asset Type Code page
-        When I click on the edit button of a required Asset Type Code
-        Then the system should allow me to navigate to the Asset Type code Update screen
+Scenario: Create a new Asset Type Code
+    Given I am on the Asset Type Code page
+    When I click on Create New Asset Type Code
+    And I enter valid Asset Category, Type Code and Type Code Description
+    And I click on Save
+    Then I should see a success message
+    And the new Asset Type Code should be listed in the grid
 
-Scenario: Verify the edit functionality of Type Code
-        Given I am on the Asset Type Code Update screen
-        When I click on the edit button of the Type Code field
-        Then the system should show the Type Code field as disabled to edit
+Scenario: View Asset Type Code details
+    Given I am on the Asset Type Code page
+    When I click on the View icon of a specific Asset Type Code
+    Then I should be able to view the details of that Asset Type Code
 
-Scenario: Verify the edit functionality of Type Code Description
-        Given I am on the Asset Type Code Update screen
-        When I edit the Type Code description
-        Then the system should allow me to edit the Type Code description
+Scenario: Edit Asset Type Code details
+    Given I am on the Asset Type Code page
+    When I click on the Edit button of a specific Asset Type Code
+    Then I should be redirected to the Asset Type Code Update screen
+    And the Service and Asset Classification fields should be editable
+    And the Type Code Description field should be editable
+    And the Type Code field should be disabled
 
-Scenario: Validating the functionality of Asset Category, Type Code and Type Code Description with Valid data
-        Given I am on the Create New Type Code page
-        When I enter valid Asset Category, Type Code and Type Code Description
-        And I click on the Save button
-        Then the system should allow me to enter the Asset Category, Type Code and Type Code Description
+Scenario: Delete Asset Type Code
+    Given I am on the Asset Type Code page
+    When I click on the Delete button of a specific Asset Type Code
+    And I confirm the deletion
+    Then the Asset Type Code should be deleted from the grid
 
-Scenario: Validating the functionality of Save button
-        Given I am on the Create New Type Code page
-        When I give all the fields with valid data
-        And I click on the Save button
-        And I click on the Ok button
-        Then the system should display the message '<Asset Type Code> - <Type code Description> has been created successfully!'
+Scenario: Filter Asset Type Codes
+    Given I am on the Asset Type Code page
+    When I enter filter criteria for Service, Asset Classification, Asset Category, Type Code and Type Code Description
+    And I click on Fetch
+    Then I should see a filtered list of Asset Type Codes in the grid
 
-Scenario: Validating the dropdown functionality of Service and Asset Classification using keyboard in Create Asset Code page
-        Given I am on the Create New Type Code page
-        When I click on the Service and Asset Classification dropdown field
-        And I use arrow keys to navigate
-        And I press Enter to select an option
-        Then the system should display the selected Service and Asset Classification dropdown field
+Scenario: Invalid Asset Category and Type Code
+    Given I am on the Create New Asset Type Code page
+    When I enter an invalid Asset Category or Type Code
+    And I click on Save
+    Then I should see an error message
 
-Scenario: Validating the dropdown functionality of Service and Asset Classification
-        Given I am on the Create New Type Code page
-        When I select the respective Service and Asset Classification from the dropdown
-        Then the system should allow me to select the respective Service and Asset Classification
+Scenario: Dropdown functionality
+    Given I am on the Create New Asset Type Code page
+    When I click on the Service and Asset Classification dropdown fields
+    And I use arrow keys to navigate
+    And I press Enter to select an option
+    Then the selected option should be displayed in the respective dropdown field
 
-Scenario: Verify the screen elements presence in the Asset Type Code List
-        Given I am on the Asset Type Code page
-        When I verify the screen elements
-        Then the system should display the screen elements presence in the 'Asset Type Code List' Page
+Scenario: Missing Asset Category
+    Given I am on the Create New Asset Type Code page
+    When I leave the Asset Category field blank
+    And I click on Save
+    Then I should see an error message
 
-Scenario: Verification of the functionality of Service Dropdown
-        Given I am on the Asset Type Code page
-        When I verify the Service dropdown
-        Then the system should defaultly display the Service with All Option.
+Scenario: Edit Asset Type Code Description
+    Given I am on the Asset Type Code Update screen
+    When I edit the Type Code Description
+    And I click on Update
+    Then I should see a success message
+    And the updated Asset Type Code should be listed in the grid
+
+Scenario: Disabled Type Code field
+    Given I am on the Asset Type Code Update screen
+    When I try to edit the Type Code field
+    Then the field should be disabled
+
+Scenario: Export Asset Type Codes
+    Given I am on the Asset Type Code page
+    When I click on Export
+    Then I should see the Asset Type Codes exported in a file format
+
+Scenario: Invalid Asset Category and Asset Classification
+    Given I am on the Create New Asset Type Code page
+    When I enter an invalid Asset Category or Asset Classification
+    And I click on Save
+    Then I should see an error message
+
+Scenario: Search Asset Type Codes
+    Given I am on the Asset Type Code page
+    When I enter search criteria for Service, Asset Classification, Asset Category, Type Code and Type Code Description
+    And I click on Search
+    Then I should see a search result list of Asset Type Codes in the grid
+
+Scenario: Missing Type Code
+    Given I am on the Create New Asset Type Code page
+    When I leave the Type Code field blank
+    And I click on Save
+    Then I should see an error message
+
+Scenario: Refresh Asset Type Codes
+    Given I am on the Asset Type Code page
+    When I click on Refresh
+    Then the Asset Type Code grid should be refreshed
+
+Scenario: Cancel Asset Type Code Update
+    Given I am on the Asset Type Code Update screen
+    When I click on Cancel
+    Then I should be redirected to the Asset Type Code page
+
+Scenario: Missing Type Code Description
+    Given I am on the Create New Asset Type Code page
+    When I leave the Type Code Description field blank
+    And I click on Save
+    Then I should see an error message
+
+Scenario: Close Asset Type Code
+    Given I am on the Asset Type Code page
+    When I click on Close
+    Then I should be redirected to the Hospital Master menu
